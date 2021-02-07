@@ -14,7 +14,7 @@ Apart from the libraries included in the Anaconda distribution for Python 3.6, f
 
 ##### Data
 
-Data was downloaded from the [a link](https://appen.com/)
+Data was downloaded from the [Figure8](https://appen.com/)
 
 ##### Installing 
  To clone this git repo:
@@ -40,5 +40,5 @@ Udacity and Figure8
 
 
 ##### License
-[a_link] https://opensource.org/licenses/MIT
+[MIT LICENSE] https://opensource.org/licenses/MIT
 
