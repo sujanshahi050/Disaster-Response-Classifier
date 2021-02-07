@@ -40,5 +40,6 @@ Udacity and Figure8
 
 
 ##### License
-[MIT LICENSE] https://opensource.org/licenses/MIT
+
+(https://opensource.org/licenses/MIT)
 
