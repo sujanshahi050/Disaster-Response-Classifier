@@ -1,7 +1,6 @@
 import json
 import plotly
 import pandas as pd
-
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
@@ -26,11 +25,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
+df = pd.read_sql_table('disaster_messages_table', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -43,27 +42,56 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # Distribution of categoires
+    categories = df.iloc[:,4:].sum().sort_values().reset_index()
+    categories.columns = ['category','count']
+    categories_labels = categories['category'].values.tolist()
+    categories_values = categories['count'].values.tolist()
+    
+    # 
+    
+    
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
-    graphs = [
+    graphs = [  
+        # Graph data for distribution of messages genres
+        {'data':[
+            Bar(
+                x = genre_names,
+                y = genre_counts     
+            )
+        
+        ],
+         'layout':{'title': 'Distribution of Messages Genre',
+                   'yaxis':{
+                       'title': "Count"
+                   },
+                   'xaxis':{
+                        'title': "genre"
+                   }
+            }
+        },
+        
+        # Graph data for Messages Categories Distribution
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    x=categories_labels,
+                    y=categories_values,
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Distribution of Message Categories',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Category"
                 }
             }
         }
+        
     ]
     
     # encode plotly graphs in JSON
@@ -91,6 +119,11 @@ def go():
         classification_result=classification_results
     )
 
+@app.route('/about')
+def about():
+    return render_template(
+        'about.html'
+    )
 
 def main():
     app.run(host='0.0.0.0', port=3001, debug=True)
