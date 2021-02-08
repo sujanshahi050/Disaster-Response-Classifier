@@ -18,7 +18,13 @@ def load_data(messages_filepath, categories_filepath):
     return df
 
 def clean_data(df):
+    """
+        Function that takes a pandas dataframe as an input; cleans the dataframe and returns it
+        
+        INPUT: df (pandas dataframe object) : Dataframe object to be cleaned
+        OUTPUT: df (pandas datafrmae object): Cleaned dataframe object
     
+    """
     
     # Create a dataframe of 36 individual categories
     categories = df['categories'].str.split(pat=";",expand=True)
@@ -31,15 +37,27 @@ def clean_data(df):
         categories[column] = categories[column].astype(int)
     df = df.drop(['categories'],axis=1)
     df = pd.concat([df,categories],axis=1,join='inner')
+    # Replace 2s with 1 in related column
+    df.related.replace(2,1,inplace=True)
     df.drop_duplicates(inplace=True)
     return df
 
 def save_data(df, database_filename):
+    """
+        Function that takes in a dataframe object and a databse filename and saves the dataframe object into a sql table with the given database filename.
+        
+        INPUT: df(pandas dataframe object): Dataframe to be saved as a SQL table
+               database_filename (str) : String representing the database filename
+        OUTPUT: None, Saves the dataframe object into a database as a table.
+    """
     engine = create_engine('sqlite:///'+ database_filename)
-    df.to_sql('disaster_messages_table', engine, index=False) 
+    df.to_sql('disaster_messages_table',if_exists='replace', engine, index=False) 
 
 
 def main():
+    """
+        Main Function
+    """
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
