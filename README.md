@@ -38,19 +38,27 @@ Run the following commands to get the app running:
 
 app/
 
- template/
+  template/
+    
     master.html - Main Page. 
     go.html -  Results Page.
     about.html- About Page
+ 
+ 
  run.py - flask app entry point.
+
 data/
- disaster_categories.csv - Disaster categories dataset.
- disaster_messages.csv - Disaster Messages dataset.
- process_data.py -  Python script to process and store data.
- DisasterResponse.db - The database with the merged and cleand data.
+ 
+  disaster_categories.csv - Disaster categories dataset.
+  disaster_messages.csv - Disaster Messages dataset.
+  process_data.py -  Python script to process and store data.
+  DisasterResponse.db - The database with the merged and cleand data.
+
 models/
+ 
  train_classifier.py - Python Script that contains NLP and ML codes
  classifier.pkl - Pickle file that holds our ML model
+
 demo.gif - A small demo gif of the appliction.
 
 ##### Authors
